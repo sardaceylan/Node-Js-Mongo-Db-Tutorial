@@ -3,7 +3,7 @@ extends ../layouts/main-layout.pug
 block content 
 
     if (action !== 'undefined' && action === 'create')
-        div.alert.alert-danger The product has been created.
+        div.alert.alert-success The product has been created.
 
     if (action !== 'undefined' && action === 'delete')
         div.alert.alert-danger The product has been deleted.
@@ -23,11 +23,11 @@ block content
                     tr
 
                         td #{category.name}
-                        td #{category.price} TL
+                        td #{category.description}
                         td 
                             a.btn.btn-primary.btn-sm.mr-2(href=`/admin/categories/${category._id}`) Edit
                             form(action='/admin/delete-category' method='POST')
                                 input(type='hidden' name='categoryid' value=`${category._id}`)
                                 button(type='submit').btn.btn-danger.btn-sm.my-2 Delete
     else
-        h1 No Products                        e
+        h1 No Products                        
