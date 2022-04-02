@@ -25,4 +25,5 @@ router.get("/categories/:categoryid", adminController.getEditCategory);
 
 router.post("/categories", adminController.postEditCategory);
 
+
 module.exports = router;
