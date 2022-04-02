@@ -7,7 +7,10 @@ class Product {
     this.price = price;
     this.description = description;
     this.imageUrl = imageUrl;
-    this.categories = categories && !Array.isArray(categories) ? Array.of(categories): categories;
+    this.categories =
+      categories && !Array.isArray(categories)
+        ? Array.of(categories)
+        : categories;
     this._id = id ? new mongodb.ObjectID(id) : null;
     this.userId = userId;
   }
@@ -64,6 +67,18 @@ class Product {
       .collection("products")
       .deleteOne({ _id: new mongodb.ObjectID(productid) })
       .then(() => console.log(deleted))
+      .catch((err) => console.log(err));
+  }
+
+  static findByCategoryId(categoryid) {
+    const db = getDb();
+    return db
+      .collection("products")
+      .find({ categories: categoryid })
+      .toArray()
+      .then((products) => {
+        return products;
+      })
       .catch((err) => console.log(err));
   }
 }
