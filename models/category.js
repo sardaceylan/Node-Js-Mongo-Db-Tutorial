@@ -1,19 +1,33 @@
-const Sequelize = require('sequelize');
+const getDb = require("../utility/database").getdb;
+const mongodb = require("mongodb");
 
-const sequelize = require('../utility/database');
+class Category {
+  constructor(name, description) {
+    this.name = name;
+    this.description = description;
+  }
 
-const Category = sequelize.define('category', {
-    id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        allowNull: false,
-        primaryKey: true
-    },
-    name: Sequelize.STRING,
-    description: {
-        type: Sequelize.STRING,
-        allowNull: true
-    }
-});
+  save() {
+    const db = getDb();
+
+    return db
+      .collection("categories")
+      .insertOne(this)
+      .then((result) => console.log(result))
+      .catch((err) => console.log(err));
+  }
+
+  static findAll() {
+    const db = getDb();
+    return db
+      .collection("categories")
+      .find()
+      .toArray()
+      .then((categories) => {
+        return categories;
+      })
+      .catch((err) => console.log(err));
+  }
+}
 
 module.exports = Category;
